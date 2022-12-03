@@ -39,6 +39,7 @@ const VirtualizedList = ({
       pageSize: 10,
       pageCount: 0,
       searchText: '',
+      searchClear: false,
       loadMore: false,
     },
   );
@@ -50,15 +51,17 @@ const VirtualizedList = ({
   }, [pagingAndSearch.page, pagingAndSearch.searchText]);
 
   const loadData = () => {
-    dispatch(
-      Actions.movieAction.getMovies({
-        controller,
-        loadMore: pagingAndSearchRef?.current.loadMore,
-        pageSize: pagingAndSearchRef?.current.pageSize,
-        pageNumber: pagingAndSearchRef?.current.page,
-        searchText: pagingAndSearchRef?.current.searchText,
-      }),
-    );
+    if (pagingAndSearchRef.current.searchText.length > 2 || pagingAndSearchRef.current.searchClear) {
+      dispatch(
+        Actions.movieAction.getMovies({
+          controller,
+          loadMore: pagingAndSearchRef?.current.loadMore,
+          pageSize: pagingAndSearchRef?.current.pageSize,
+          pageNumber: pagingAndSearchRef?.current.page,
+          searchText: pagingAndSearchRef?.current.searchText,
+        }),
+      );
+    }
   };
 
   const refresh = useCallback((showRefreshLoading = true) => {
@@ -97,7 +100,7 @@ const VirtualizedList = ({
       const val = value;
       //Set text
       setSearchTextHook(value);
-     
+
       //wait second and then search
       clearTimeout(searchTimer);
       setSearchTimer(
@@ -105,6 +108,7 @@ const VirtualizedList = ({
           setPagingAndSearch(curr => ({
             ...curr,
             searchText: val,
+            searchClear: val.length == 0 ? true : false,
             page: 1,
             loadMore: false,
           }));

@@ -4,15 +4,21 @@ import ActionTypes from '../action-types';
 
 export function* getMovies({payload}) {
   try {
-    const response = yield call(GetMovies, payload);
-    if (response.success) {
-      
+    if (payload.searchText.length > 2) {
+      const response = yield call(GetMovies, payload);
+      if (response.success) {
+        yield put({
+          type: ActionTypes.movies.GET_MOVIES_SUCCESS,
+          response: response.data,
+        });
+      } else {
+        yield put({type: ActionTypes.movies.GET_MOVIES_ERROR});
+      }
+    } else {
       yield put({
         type: ActionTypes.movies.GET_MOVIES_SUCCESS,
-        response: response.data,
+        response: {data: []},
       });
-    } else {
-      yield put({type: ActionTypes.movies.GET_MOVIES_ERROR});
     }
   } catch (error) {
     console.log('err>', error);
@@ -21,8 +27,7 @@ export function* getMovies({payload}) {
 
 export function* getMovieDetail({payload}) {
   try {
-
-    const response = yield call(GetMovieDetail, payload); 
+    const response = yield call(GetMovieDetail, payload);
     if (response.success) {
       yield put({
         type: ActionTypes.movies.GET_DETAIL_MOVIE_SUCCESS,

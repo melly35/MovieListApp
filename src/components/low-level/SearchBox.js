@@ -19,7 +19,7 @@ const SearchBox = ({
   style,
 }) => {
   const clear = useCallback(() => {
-    onChange();
+    onChange('');
   });
 
   return (
