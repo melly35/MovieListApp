@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="splashscreen_bg">#181A32</color>
+    <color name="app_bg">#2F3942</color>
+    <color name="status_bar_color">#fff</color>
+    <color name="white">#FFF</color>
+    <color name="black">#000</color>
+    <color name="ic_launcher_background">#181A32</color>
+</resources>
