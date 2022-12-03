@@ -131,7 +131,7 @@ const VirtualizedList = ({
             onRefresh={refresh}
           />
         }
-        style={{flex: 1, marginBottom: 10}}
+        style={{flex: 1, marginBottom: 0}}
         keyExtractor={keyExtractor}
         data={moviesData}
         onEndReached={loadMore}
